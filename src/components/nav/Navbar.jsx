@@ -11,18 +11,9 @@ const Navbar = () => {
 
 const Nav = styled.nav`
   width: 100%;
-  height: 55px;
-  border-bottom: 2px solid #f1f1f1;
+  height: 65px;
   padding: 0 20px;
   display: flex;
-  justify-content: center;
-  background-color: 141738;
-  color: #f2506e;
-
-  .logo {
-    font-size: 1.5rem;
-    padding: 15px 0;
-  }
 `;
 
 export default Navbar;
