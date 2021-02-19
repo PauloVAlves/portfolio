@@ -1,3 +1,3 @@
 # My personal website
 
-Check out [here](https://pauloalves.me).
+Check it out [here](https://pauloalves.me).
