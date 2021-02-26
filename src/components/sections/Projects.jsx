@@ -21,7 +21,7 @@ const Projects = () => {
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
             </a>
 
-            <a href='https://calcalorias.netlify.app' className='live'>
+            <a href='https://calcalorias.com' className='live'>
               Acesse
             </a>
           </div>
