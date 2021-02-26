@@ -10,10 +10,14 @@ const Navbar = () => {
 };
 
 const Nav = styled.nav`
-  width: 100%;
+  max-width: 100%;
   height: 65px;
   padding: 0 20px;
   display: flex;
+
+  @media (max-width: 900px) {
+    max-width: auto;
+  }
 `;
 
 export default Navbar;

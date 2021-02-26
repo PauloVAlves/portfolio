@@ -9,9 +9,9 @@ const About = () => {
       <div className='about-me-text'>
         <p>
           I am a web developer with great passion for programming and
-          technology. I have great knowledge of Javascript and good
-          understanding of React, React Native, Vuejs, .NET Core, HTML, CSS,
-          SASS and Styled Components.
+          technology. I have great knowledge of <strong>Javascript</strong> and
+          good understanding of <strong>React, React Native,</strong> Vuejs, C#,
+          .NET Core, <strong>HTML, CSS,</strong> SASS and Styled Components.
         </p>
         <br />
         <p>
@@ -37,13 +37,26 @@ const AboutMe = styled.div`
   }
 
   .about-me-text {
-    font-weight: 600;
+    font-weight: 400;
     max-width: 600px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     font-size: 1.3rem;
 
     p {
+    }
+  }
+
+  @media (max-width: 900px) {
+    display: block;
+    height: auto;
+
+    .about-me-text {
+      margin-top: 50px;
+      font-size: 1.3rem;
+
+      p {
+      }
     }
   }
 `;

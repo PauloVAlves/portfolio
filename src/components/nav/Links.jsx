@@ -31,15 +31,17 @@ const Ul = styled.ul`
   }
 
   a {
+    transition: all 0.5s ease-in-out;
     text-decoration: none;
     color: #f6b011;
   }
 
   a:hover {
+    transition: all 0.5s ease-in-out;
     color: #f2506e;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     flex-flow: column nowrap;
     background-color: #59c1d5;
     position: fixed;

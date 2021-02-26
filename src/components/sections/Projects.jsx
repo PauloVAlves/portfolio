@@ -20,9 +20,8 @@ const Projects = () => {
             <a href='#'>
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
             </a>
-
             <a href='https://calcalorias.com' className='live'>
-              Acesse
+              Visit
             </a>
           </div>
         </div>
@@ -32,12 +31,8 @@ const Projects = () => {
           <img src='../assets/logo512.png' alt='' />
         </div>
         <div className='actions'>
-          <h3>Calcalorias</h3>
-          <p>
-            O aplicativo calcula as calorias de uma receita,bastando adicionar
-            os alimentos e a quantidade, adicionar a porção e clicar em
-            calcular.
-          </p>
+          <h3>Calcalorias - Mobile</h3>
+          <p>The app calculates all the nutritional values of a recipe.</p>
           <div className='find-more'>
             <a href='#'>
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
@@ -102,9 +97,10 @@ const Project = styled.div`
   }
 
   .live {
+    transition: all 0.5s ease-in-out;
     text-decoration: none;
     font-size: 1.2rem;
-    padding: 10px;
+    padding: 5px;
     background-color: #59c1d5;
     border-radius: 10px;
     margin: 10px;
@@ -112,12 +108,35 @@ const Project = styled.div`
   }
 
   .live:hover {
+    transition: all 0.5s ease-in-out;
     color: #f6b011;
     background-color: #141738;
   }
+
   .icon {
     font-size: 1.7rem;
     color: #000;
+  }
+
+  @media (max-width: 1200px) {
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-width: 80%;
+    }
+
+    .image {
+      border-radius: 10px;
+      padding: 0;
+    }
+    img {
+      width: 100%;
+      max-height: auto;
+    }
+
+    .find-more {
+      margin-bottom: 30px;
+    }
   }
 `;
 export default Projects;

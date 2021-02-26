@@ -10,6 +10,7 @@ const Contact = () => {
       <input type='email' name='email' id='email' />
       <label htmlFor='message'>Message</label>
       <textarea name='message' id='message' cols='30' rows='10'></textarea>
+      <input type='submit' value='Send' className='btn btn-send' />
     </ContactMe>
   );
 };
@@ -31,12 +32,35 @@ const ContactMe = styled.form`
     display: block;
     margin-right: auto;
     margin-left: auto;
-    min-width: 40%;
+    width: 40%;
     margin-bottom: 20px;
-    padding: 10px;
     font-size: 1.3rem;
     border-radius: 10px;
+    padding: 10px;
     border: none;
+  }
+
+  .btn {
+    transition: all 1s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    background-color: #141738;
+    color: #f6b011;
+    width: 41.5%;
+  }
+
+  .btn:hover {
+    transition: all 1s ease-in-out;
+    background-color: #f6b011;
+    color: #141738;
+  }
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+
+    textarea {
+      max-width: 90%;
+    }
   }
 `;
 
