@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import calorias from '../../assets/calcalorias.png';
+import caloriasSite from '../../assets/calcalorias-site.png';
+import caloriasApp1 from '../../assets/first.png';
 
 const Projects = () => {
   return (
@@ -8,7 +9,7 @@ const Projects = () => {
       <h2>Projects</h2>
       <div className='card'>
         <div className='image'>
-          <img src={calorias} alt='' />
+          <img src={caloriasSite} alt='Web App' />
         </div>
         <div className='actions'>
           <h3>Calcalorias</h3>
@@ -28,19 +29,22 @@ const Projects = () => {
       </div>
       <div className='card'>
         <div className='image'>
-          <img src='../assets/logo512.png' alt='' />
+          <img src={caloriasApp1} alt='Mobile App' />
         </div>
         <div className='actions'>
           <h3>Calcalorias - Mobile</h3>
           <p>The app calculates all the nutritional values of a recipe.</p>
           <div className='find-more'>
-            <a href='#'>
+            <a href='https://github.com/PauloVAlves/calcalorias-react-native'>
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
             </a>
-
-            <a href='https://calcalorias.netlify.app' className='live'>
-              Live Demo
+            <a href='#'>
+              <FontAwesomeIcon className='icon' icon={['fab', 'google-play']} />
             </a>
+
+            {/* <a href='https://calcalorias.netlify.app' className='live'>
+              Live Demo
+            </a> */}
           </div>
         </div>
       </div>
