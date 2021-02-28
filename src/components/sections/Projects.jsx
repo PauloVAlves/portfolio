@@ -18,7 +18,7 @@ const Projects = () => {
             and quantity, add the portion and click calculate.
           </p>
           <div className='find-more'>
-            <a href='#'>
+            <a href='https://github.com/PauloVAlves/CalCalculadora'>
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
             </a>
             <a href='https://calcalorias.com' className='live'>
@@ -39,12 +39,11 @@ const Projects = () => {
               <FontAwesomeIcon className='icon' icon={['fab', 'github']} />
             </a>
             <a href='#'>
-              <FontAwesomeIcon className='icon' icon={['fab', 'google-play']} />
+              <FontAwesomeIcon
+                className='app-icon'
+                icon={['fab', 'google-play']}
+              />
             </a>
-
-            {/* <a href='https://calcalorias.netlify.app' className='live'>
-              Live Demo
-            </a> */}
           </div>
         </div>
       </div>
@@ -120,6 +119,11 @@ const Project = styled.div`
   .icon {
     font-size: 1.7rem;
     color: #000;
+  }
+
+  .app-icon {
+    margin-left: 20px;
+    font-size: 1.7rem;
   }
 
   @media (max-width: 1200px) {
