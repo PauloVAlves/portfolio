@@ -2,8 +2,14 @@ import styled from 'styled-components';
 
 const Contact = () => {
   return (
-    <ContactMe action='POST' method='post' data-netlify='true' id='contact'>
+    <ContactMe
+      method='post'
+      data-netlify='true'
+      data-netlify-honeypot='bot-field'
+      id='contact'
+    >
       <h2>Contact</h2>
+      <input type='hidden' name='form-name' value='contact' />
       <label htmlFor='name'>Name</label>
       <input type='text' name='name' id='name' />
       <label htmlFor='email'>Email</label>
