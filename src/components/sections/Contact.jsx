@@ -1,52 +1,136 @@
+import React, { useState, useEffect } from 'react/cjs/react.development';
 import axios from 'axios';
-import { useState } from 'react/cjs/react.development';
 import styled from 'styled-components';
 
 const Contact = () => {
-  const [status, setStatus] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [buttonValue, setButtonValue] = useState('Send');
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const validationRules = {
+    name: (val) => val,
+    email: (val) => val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+    message: (val) => !!val,
+  };
+  const validate = () => {
+    let errors = {};
+    let hasErrors = false;
+    for (let key of Object.keys(inputs)) {
+      errors[key] = !validationRules[key](inputs[key]);
+      hasErrors |= errors[key];
+    }
+    setFieldErrors((prev) => ({ ...prev, ...errors }));
+    return !hasErrors;
+  };
+  const renderFieldError = (field) => {
+    if (fieldErrors[field]) {
+      return <p className='errorMsg'>Please enter a valid {field}.</p>;
+    }
+  };
+  useEffect(() => {
+    // Only perform interactive validation after submit
+    if (Object.keys(fieldErrors).length > 0) {
+      validate();
+    }
+  }, [inputs]);
+  /* End new validation ^^^^ */
 
-  const formSubmit = (ev) => {
-    const form = ev.target;
-    const data = new FormData(form);
-    const xhr = new XMLHttpRequest();
-    xhr.open(form.method, form.action);
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState !== XMLHttpRequest.DONE) return;
-      if (xhr.status === 200) {
-        form.reset();
-        setStatus({ status: 'SUCCESS' });
-      } else {
-        setStatus({ status: 'ERROR' });
-      }
-    };
-    xhr.send(data);
+  // Input Change Handling
+
+  const handleOnChange = (event) => {
+    event.persist();
+    setInputs((prev) => ({
+      ...prev,
+      [event.target.id]: event.target.value,
+    }));
+  };
+
+  // Server State Handling
+  const [serverState, setServerState] = useState({
+    submitting: false,
+    status: null,
+  });
+  const handleServerResponse = (ok, msg) => {
+    setServerState({
+      submitting: false,
+      status: { ok, msg },
+    });
+    if (ok) {
+      setFieldErrors({});
+      setInputs({
+        name: '',
+        email: '',
+        message: '',
+      });
+      setTimeout(() => {
+        setButtonValue('Email Sent');
+      }, 5000);
+      setButtonValue('Send');
+    }
+  };
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    if (!validate()) {
+      return;
+    }
+    setServerState({ submitting: true });
+    axios({
+      method: 'POST',
+      url: 'https://formspree.io/f/mrgovaoq',
+      data: inputs,
+    })
+      .then((r) => {
+        handleServerResponse(true, 'Thanks!');
+      })
+      .catch((r) => {
+        handleServerResponse(false, r.response.data.error);
+      });
   };
 
   return (
-    <ContactMe
-      method='post'
-      onSubmit={formSubmit}
-      action='https://formspree.io/f/mrgovaoq'
-      id='contact'
-    >
+    <ContactMe id='contact' onSubmit={handleOnSubmit}>
       <h2>Contact</h2>
-      <input type='hidden' name='form-name' value='contact' />
+      <input type='hidden' name='form-name' />
       <label htmlFor='name'>Name</label>
-      <input type='text' name='name' id='name' />
+      <input
+        type='text'
+        name='name'
+        id='name'
+        onChange={handleOnChange}
+        values={inputs.name}
+        className={fieldErrors.name ? 'error' : ''}
+      />
       <label htmlFor='email'>Email</label>
-      <input type='email' name='email' id='email' />
+      <input
+        type='email'
+        name='_replyto'
+        id='email'
+        onChange={handleOnChange}
+        value={inputs.email}
+        className={fieldErrors.email ? 'error' : ''}
+      />
       <label htmlFor='message'>Message</label>
-      <textarea name='message' id='message' cols='30' rows='10'></textarea>
+      <textarea
+        name='message'
+        id='message'
+        cols='30'
+        rows='10'
+        onChange={handleOnChange}
+        value={inputs.message}
+        className={fieldErrors.message ? 'error' : ''}
+      ></textarea>
 
-      {status === 'SUCCESS' ? (
-        <p>Thanks!</p>
-      ) : (
-        <button onClick={formSubmit} className='btn btn-send'>
-          Send
-        </button>
-      )}
-      {status === 'ERROR' && <p>Ooops! There was an error.</p>}
+      <button
+        type='submit'
+        disabled={serverState.submitting}
+        value='Send'
+        className={!serverState.ok ? 'btn errorMsg' : 'btn'}
+      >
+        {buttonValue}
+      </button>
     </ContactMe>
   );
 };
