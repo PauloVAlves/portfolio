@@ -3,103 +3,50 @@ import { useState } from 'react/cjs/react.development';
 import styled from 'styled-components';
 
 const Contact = () => {
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    message: '',
-    sent: false,
-    err: '',
-    buttonValue: 'Send',
-  });
+  const [status, setStatus] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData({ ...data, [name]: value });
-  };
-
-  const formSublit = (e) => {
-    e.preventDefault();
-
-    setData({ ...data, buttonValue: 'Sending...' });
-
-    axios
-      .post('/sendmail', data)
-      .then((res) => {
-        if (res.data.result !== 'success') {
-          setData({
-            ...data,
-            buttonValue: 'Failed to send',
-            sent: false,
-            err: 'fail',
-          });
-          setTimeout(() => {
-            resetForm();
-          }, 6000);
-        } else {
-          setData({
-            ...data,
-            sent: true,
-            buttonValue: 'Email Sent!',
-            err: 'success',
-          });
-          setTimeout(() => {
-            resetForm();
-          }, 6000);
-        }
-      })
-      .catch((err) => {
-        setData({ ...data, buttonValue: 'Failed to send', err: 'fail' });
-      });
-  };
-
-  const resetForm = () => {
-    setData({
-      name: '',
-      email: '',
-      message: '',
-      sent: false,
-      buttonValue: 'Send',
-      err: '',
-    });
+  const formSubmit = (ev) => {
+    const form = ev.target;
+    const data = new FormData(form);
+    const xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState !== XMLHttpRequest.DONE) return;
+      if (xhr.status === 200) {
+        form.reset();
+        setStatus({ status: 'SUCCESS' });
+      } else {
+        setStatus({ status: 'ERROR' });
+      }
+    };
+    xhr.send(data);
   };
 
   return (
     <ContactMe
       method='post'
-      data-netlify='true'
-      data-netlify-honeypot='bot-field'
+      onSubmit={formSubmit}
+      action='https://formspree.io/f/mrgovaoq'
       id='contact'
     >
       <h2>Contact</h2>
       <input type='hidden' name='form-name' value='contact' />
       <label htmlFor='name'>Name</label>
-      <input
-        type='text'
-        name='name'
-        id='name'
-        value={data.name}
-        onChange={handleChange}
-      />
+      <input type='text' name='name' id='name' />
       <label htmlFor='email'>Email</label>
-      <input
-        type='email'
-        name='email'
-        id='email'
-        value={data.email}
-        onChange={handleChange}
-      />
+      <input type='email' name='email' id='email' />
       <label htmlFor='message'>Message</label>
-      <textarea
-        name='message'
-        id='message'
-        cols='30'
-        rows='10'
-        value={data.message}
-        onChange={handleChange}
-      ></textarea>
-      <button onClick={formSublit} className='btn btn-send'>
-        {data.buttonValue}
-      </button>
+      <textarea name='message' id='message' cols='30' rows='10'></textarea>
+
+      {status === 'SUCCESS' ? (
+        <p>Thanks!</p>
+      ) : (
+        <button onClick={formSubmit} className='btn btn-send'>
+          Send
+        </button>
+      )}
+      {status === 'ERROR' && <p>Ooops! There was an error.</p>}
     </ContactMe>
   );
 };
