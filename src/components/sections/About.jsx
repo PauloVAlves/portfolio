@@ -27,6 +27,7 @@ const About = () => {
 const AboutMe = styled.div`
   height: 50vh;
   line-height: 1.7rem;
+  font-weight: 400;
   background-color: #59c1d5;
   color: #000;
   padding: 30px;
