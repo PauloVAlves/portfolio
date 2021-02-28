@@ -29,7 +29,7 @@ const FrontPage = styled.div`
     margin: 21% auto;
 
     h1 {
-      font-size: 70px;
+      font-size: 64px;
       font-family: poppins;
       text-transform: uppercase;
       color: #fff;
