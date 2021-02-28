@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react/cjs/react.development';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
-const Contact = () => {
+function Contact() {
+  /* NEW: validation for inputs vvvv */
   const [fieldErrors, setFieldErrors] = useState({});
-  const [buttonValue, setButtonValue] = useState('Send');
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -65,10 +65,6 @@ const Contact = () => {
         email: '',
         message: '',
       });
-      setTimeout(() => {
-        setButtonValue('Email Sent');
-      }, 5000);
-      setButtonValue('Send');
     }
   };
   const handleOnSubmit = (event) => {
@@ -91,51 +87,53 @@ const Contact = () => {
   };
 
   return (
-    <ContactMe id='contact' onSubmit={handleOnSubmit}>
+    <ContactMe id='contact'>
       <h2>Contact</h2>
-      <input type='hidden' name='form-name' />
-      <label htmlFor='name'>Name</label>
-      <input
-        type='text'
-        name='name'
-        id='name'
-        onChange={handleOnChange}
-        values={inputs.name}
-        className={fieldErrors.name ? 'error' : ''}
-      />
-      <label htmlFor='email'>Email</label>
-      <input
-        type='email'
-        name='_replyto'
-        id='email'
-        onChange={handleOnChange}
-        value={inputs.email}
-        className={fieldErrors.email ? 'error' : ''}
-      />
-      <label htmlFor='message'>Message</label>
-      <textarea
-        name='message'
-        id='message'
-        cols='30'
-        rows='10'
-        onChange={handleOnChange}
-        value={inputs.message}
-        className={fieldErrors.message ? 'error' : ''}
-      ></textarea>
-
-      <button
-        type='submit'
-        disabled={serverState.submitting}
-        value='Send'
-        className={!serverState.ok ? 'btn errorMsg' : 'btn'}
-      >
-        {buttonValue}
-      </button>
+      <form onSubmit={handleOnSubmit} noValidate>
+        <label htmlFor='name'>Name: </label>
+        <input
+          id='name'
+          type='name'
+          name='name'
+          onChange={handleOnChange}
+          value={inputs.name}
+          className={fieldErrors.name ? 'error' : ''}
+        />
+        <label htmlFor='email'>Email:</label>
+        <input
+          id='email'
+          type='email'
+          name='email'
+          onChange={handleOnChange}
+          value={inputs.email}
+          className={fieldErrors.email ? 'error' : ''}
+        />
+        {renderFieldError('email')}
+        <label htmlFor='message'>Message:</label>
+        <textarea
+          id='message'
+          name='message'
+          onChange={handleOnChange}
+          value={inputs.message}
+          className={fieldErrors.message ? 'error' : ''}
+          cols='30'
+          rows='10'
+        ></textarea>
+        {renderFieldError('message')}
+        <button className='btn' type='submit' disabled={serverState.submitting}>
+          Submit
+        </button>
+        {serverState.status && (
+          <h2 className={!serverState.status.ok ? 'errorMsg' : ''}>
+            {serverState.status.msg}
+          </h2>
+        )}
+      </form>
     </ContactMe>
   );
-};
+}
 
-const ContactMe = styled.form`
+const ContactMe = styled.div`
   line-height: 1.7rem;
   background-color: #59c1d5;
   color: #000;
@@ -158,6 +156,10 @@ const ContactMe = styled.form`
     border-radius: 10px;
     padding: 10px;
     border: none;
+  }
+
+  textarea {
+    columns: 30;
   }
 
   .btn {
