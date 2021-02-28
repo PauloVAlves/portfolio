@@ -9,14 +9,15 @@ const About = () => {
       <div className='about-me-text'>
         <p>
           I am a web developer with great passion for programming and
-          technology. I have great knowledge of <strong>Javascript</strong> and
-          good understanding of <strong>React, React Native,</strong> Vuejs, C#,
-          .NET Core, <strong>HTML, CSS,</strong> SASS and Styled Components.
+          technology. I have knowledge (and love) of <strong>Javascript</strong>{' '}
+          and good understanding of <strong>React, React Native, HTML, </strong>{' '}
+          SASS, Styled Components Vuejs, C#, .NET Core and SQL. And a great
+          respect for <strong>CSS</strong>.
         </p>
         <br />
         <p>
-          I am highly motivated, fast learner and always trying to improve my
-          skills.
+          I am highly motivated, fast learner and I'm always trying to improve
+          my skills.
         </p>
       </div>
     </AboutMe>
